@@ -17,11 +17,11 @@ def save_user(user_id, nick_name,user_gender,user_addr,weibo_number,flower_numbe
     conn.commit()
     cur.close()
     conn.close()
-def save_weibo(weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number):
+def save_weibo(table,weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number):
     print(weibo_id,weibo_time)
     conn = pymysql.connect(user='root', passwd='mbshqqb', host='172.17.11.173', db='weibo',charset="utf8")
     cur = conn.cursor()
-    sql="insert into weibo_info(weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number) values(%s,%s,%s,%s,%s,%s,%s)"
+    sql="insert into "+table+"(weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number) values(%s,%s,%s,%s,%s,%s,%s)"
     cur.execute(sql,list([weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number]))
     conn.commit()
     cur.close()
