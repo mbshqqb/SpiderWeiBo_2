@@ -19,6 +19,13 @@ def save_weibo(table,weibo_id,user_id,weibo_content,weibo_time,forward_number,co
 def save_comment(weibo_id,comment_content,comment_thumbup_number):
     insert(['weibo_id','comment_content','comment_thumbup_number'],[weibo_id,comment_content,comment_thumbup_number],'comment_info')
 
+def exist_user_id(user_id):
+    rows=get('user_info','user_id',user_id)
+    if rows is None or len(rows)==0:
+        return True
+    else:
+        return False
+
 # def get_user_id():
 #     return ['alibuybuy']
 def get_user_id():

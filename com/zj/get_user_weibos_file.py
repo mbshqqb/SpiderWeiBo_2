@@ -4,13 +4,14 @@ from com.zj.MDBHelper import *
 # from com.zj.MySQLDBHelper import *
 from com.zj.get_page_weibo_file import *
 def get_user_weibos(user_id,time,table):
+    if exist_user_id(user_id):
+        return True
     try:
         user_url = domain_name + user_id
         response = opener.open(user_url)
     except urllib.error.URLError:
         print(user_url)
         return True
-
     print(response.info().get('Content-Encoding'))  # 获得编码，为gzip
     data = response.read()
     # gzip解压
@@ -28,16 +29,16 @@ def get_user_weibos(user_id,time,table):
     weibo_number = soup.find(class_='u').find(class_='tip2').find(class_='tc').text
     follower_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[0].text
     fans_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[1].text
-    if save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number) is False:
-        return True
 
     #获得微博页数
     pages=[token for token in soup.find(class_="pa").stripped_strings][1][2:-1]
     # ------------------------微博列表------------------------------------
-    #从第一页开始爬取
+    #从第一页开始爬取,爬取完所有的页之后需要保存用户
     for page in range(int(pages)):
         page=page+1
         print(page)
         if get_page_weibo(page,user_id,time,table) is False:
+            save_user(user_id, nick_name, user_gender, user_addr, weibo_number, follower_number, fans_number)
             return True
+    save_user(user_id, nick_name, user_gender, user_addr, weibo_number, follower_number, fans_number)
     return True

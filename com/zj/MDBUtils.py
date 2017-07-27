@@ -14,6 +14,19 @@ def getDB():
     db =client['weibo']
     return db,client
 
+
+def get(tablename, col, value):
+    list = []
+    dist = {}
+    cursor = db.get_collection(tablename).find({col: {"$eq": value}}, {"_id": 0})
+    for item in cursor:
+        for key, value in item.items():
+            dist[key] = value
+        list.append(dist)
+        dist = {}
+    return list
+
+
 def insert(collist: object, data: object, table: object) -> object:
     # 设置唯一索引，去重操作
     collection = db.get_collection(table)
