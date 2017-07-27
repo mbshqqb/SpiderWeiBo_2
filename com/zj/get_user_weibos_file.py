@@ -1,10 +1,16 @@
 # -*- coding:utf-8 -*-
+# from com.zj.TESTDHelper import *
+# from com.zj.MDBHelper import *
+from com.zj.MySQLDBHelper import *
+from com.zj.get_page_weibo_file import *
+def get_user_weibos(user_id,time,table):
+    try:
+        user_url = domain_name + user_id
+        response = opener.open(user_url)
+    except urllib.error.URLError:
+        print(user_url)
+        return True
 
-from com.zj.get_weibo_file import *
-from com.zj.DBUtils import *
-def get_user_weibos(user_id,table):
-    url = domain_name + user_id
-    response = opener.open(url)
     print(response.info().get('Content-Encoding'))  # 获得编码，为gzip
     data = response.read()
     # gzip解压
@@ -20,12 +26,17 @@ def get_user_weibos(user_id,table):
     user_addr = user_infos[1].split('/')[1]
     # user_weibo_info
     weibo_number = soup.find(class_='u').find(class_='tip2').find(class_='tc').text
-    flower_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[0].text
+    follower_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[0].text
     fans_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[1].text
+    save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number)
 
-    save_user(user_id, nick_name,user_gender,user_addr,weibo_number,flower_number,fans_number)
+    #获得微博页数
+    pages=[token for token in soup.find(class_="pa").stripped_strings][1][2:-1]
     # ------------------------微博列表------------------------------------
-    weibos = soup.find_all(class_='c', id=True)
-    for weibo in weibos:
-        weibo_id = weibo['id'].split('_')[1]
-        get_weibo(weibo_id, user_id,table)
+    #从第一页开始爬取
+    for page in range(int(pages)):
+        page=page+1
+        print(page)
+        if get_page_weibo(page,user_id,time,table) is False:
+            return True
+    return True

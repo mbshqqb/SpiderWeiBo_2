@@ -13,8 +13,8 @@ def save_weibo(user_id,weibo_content,weibo_time,forward_number,comment_number,th
     writer.writerow([weibo_content,weibo_time,forward_number,comment_number,thumbup_number])
     weibo_info_file.close()
 
-def save_user(user_id, nick_name,user_gender,user_addr,weibo_number,flower_number,fans_number):
+def save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number):
     user_info_file = open('user_info.csv', 'a', newline='',encoding='utf-8')  # 设置newline，否则两行之间会空一行
     writer = csv.writer(user_info_file)
-    writer.writerow([user_id, nick_name,user_gender,user_addr,weibo_number,flower_number,fans_number])
+    writer.writerow([user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number])
     user_info_file.close()

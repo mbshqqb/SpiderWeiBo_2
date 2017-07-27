@@ -2,10 +2,11 @@
 import gzip
 from bs4 import BeautifulSoup
 import json
+import datetime
 from com.zj.opener_com_file import *
-from com.zj.get_weibo_file import get_weibo
+from com.zj.get_weibo_detail_file import get_weibo_detail
 def main():
-    url = "http://d.weibo.com/102803_ctg1_4188_-_ctg1_4188"
+    url = "http://d.weibo.com/"
     response = opener.open(url)
     print(response.info().get('Content-Encoding'))  # 获得编码，为gzip
     data = response.read()
@@ -23,7 +24,7 @@ def main():
         print(userid_weiboid)
         user_id = userid_weiboid[0]
         weibo_id = userid_weiboid[1]
-        get_weibo(weibo_id,user_id,"shehui_weibo_info")
+        get_weibo_detail(weibo_id, user_id, datetime.datetime.now()- datetime.timedelta(hours=50),"shehui_weibo_info")
 main()
 
 
