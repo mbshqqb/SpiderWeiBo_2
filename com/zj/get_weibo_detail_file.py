@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # from com.zj.TESTDHelper import *
-# from com.zj.MDBHelper import *
-from com.zj.MySQLDBHelper import *
+from com.zj.MDBHelper import *
+# from com.zj.MySQLDBHelper import *
 import gzip
 import re
 import urllib.parse
@@ -66,7 +66,8 @@ def get_weibo_detail(weibo_id, user_id, time, table):
         forward_number=weibo_infos[0]
         comment_number=weibo_infos[1]
         thumbup_number=weibo_infos[2]
-        save_weibo(table,weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number)
+        if save_weibo(table,weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number) is False:
+            return True
         #------微博评论--------只有原创有评论
         comments=soup.find_all(id=re.compile("^C_\d*"),class_='c')
         for comment in comments:

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # from com.zj.TESTDHelper import *
-# from com.zj.MDBHelper import *
-from com.zj.MySQLDBHelper import *
+from com.zj.MDBHelper import *
+# from com.zj.MySQLDBHelper import *
 from com.zj.get_page_weibo_file import *
 def get_user_weibos(user_id,time,table):
     try:
@@ -28,7 +28,8 @@ def get_user_weibos(user_id,time,table):
     weibo_number = soup.find(class_='u').find(class_='tip2').find(class_='tc').text
     follower_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[0].text
     fans_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[1].text
-    save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number)
+    if save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number) is False:
+        return True
 
     #获得微博页数
     pages=[token for token in soup.find(class_="pa").stripped_strings][1][2:-1]
