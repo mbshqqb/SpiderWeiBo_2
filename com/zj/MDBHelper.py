@@ -21,10 +21,10 @@ def save_comment(weibo_id,comment_content,comment_thumbup_number):
 
 def exist_user_id(user_id):
     rows=get('user_info','user_id',user_id)
-    if rows is None or len(rows)==0:
-        return True
-    else:
+    if len(rows)==0:
         return False
+    else:
+        return True
 
 # def get_user_id():
 #     return ['alibuybuy']
