@@ -36,7 +36,7 @@ def get_user_weibos(user_id,time,table):
     #从第一页开始爬取,爬取完所有的页之后需要保存用户
     for page in range(int(pages)):
         page=page+1
-        print(page)
+        print('page:',page)
         if get_page_weibo(page,user_id,time,table) is False:
             save_user(user_id, nick_name, user_gender, user_addr, weibo_number, follower_number, fans_number)
             return True
