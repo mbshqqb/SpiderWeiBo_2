@@ -45,7 +45,8 @@ def get_weibo_detail(weibo_id, user_id, time, table):
         if user_id=='u':
             user_id=soup.find(class_='c', id='M_').find(class_='cmt').find('a')['href'].split('/')[2]
         weibo_id=weibo_forwarding['href'].split('/')[2].split('#')[0]
-        get_weibo_detail(weibo_id, user_id, time, table)
+        if get_weibo_detail(weibo_id, user_id, time, table) is False:
+            return False
     else:#如果是原创
         weibo_content = soup.find(class_='c', id='M_').find(class_='ctt')
         atags=weibo_content.find_all('a')

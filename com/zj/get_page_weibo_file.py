@@ -19,3 +19,4 @@ def get_page_weibo(page,user_id,time,table):
         weibo_id = weibo['id'].split('_')[1]
         if get_weibo_detail(weibo_id, user_id, time, table) is False:
             return False
+    return True

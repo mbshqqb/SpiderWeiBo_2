@@ -14,7 +14,7 @@ def getDB():
     db =client['weibo']
     return db,client
 
-def insert(collist, data, table):
+def insert(collist: object, data: object, table: object) -> object:
     # 设置唯一索引，去重操作
     collection = db.get_collection(table)
     counter=db.get_collection("counters")
@@ -24,9 +24,7 @@ def insert(collist, data, table):
     doc=counter.find_one({"name": table})
     if doc is not None:
         has_counter=True
-        print(doc.keys())
         seq_name=str([key for key in doc.keys()][2])
-        print(seq_name)
         doc=counter.find_and_modify(query={"name": table}, update={"$inc": {seq_name: 1}},new=True)
         item[seq_name] = doc[seq_name]
 

@@ -5,7 +5,6 @@ import datetime
 strs=['90分钟前','今天 16:04','07月20日 15:26','2015-06-16 10:37:15']
 
 def get_weibo_time(line):
-    print(line)
     match_today = re.match(r'(\d{1,2})分钟前', line, re.M | re.I)
     if match_today:
         time=datetime.datetime.now().replace(microsecond=0)-datetime.timedelta(minutes=int(match_today.group(1)))
