@@ -40,5 +40,4 @@ def get_user_weibos(user_id,time,table):
         if get_page_weibo(page,user_id,time,table) is False:
             save_user(user_id, nick_name, user_gender, user_addr, weibo_number, follower_number, fans_number)
             return True
-    save_user(user_id, nick_name, user_gender, user_addr, weibo_number, follower_number, fans_number)
     return True
