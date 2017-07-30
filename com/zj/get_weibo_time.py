@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-
+#
 import re
 import datetime
 strs=['90分钟前','今天 16:04','07月20日 15:26','2015-06-16 10:37:15']

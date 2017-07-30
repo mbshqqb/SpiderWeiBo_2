@@ -29,10 +29,9 @@ def exist_user_id(user_id):
     else:
         return True
 
-
 #     return ['alibuybuy']
 def get_user_id():
-    with open('id_12.csv') as f:
+    with open('id_11.csv') as f:
         reader=csv.reader(f)
         return [row[0] for row in reader]
 
