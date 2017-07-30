@@ -15,7 +15,6 @@ def get_page_weibo(page,user_id,time,table):
     except urllib.error.URLError:
         print(page_url)
         return True
-    print(response.info().get('Content-Encoding'))  # 获得编码，为gzip
     data = response.read()
     # gzip解压
     html = gzip.decompress(data).decode('utf-8')

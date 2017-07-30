@@ -38,8 +38,8 @@ def get_weibo_detail(weibo_id, user_id, time, table):
         print("TypeError:"+soup.find(class_='c', id='M_'))
         return True
     except AttributeError:
-        print(weibo_id)
-        print("AttributeError:" + soup.find(class_='c', id='M_'))
+        print()
+        print(weibo_id+"内容爬取失败:" + soup.find(class_='c', id='M_'))
         return True
     is_original=True
     if weibo_forwarding is not None:#如果是转发的话
@@ -55,7 +55,7 @@ def get_weibo_detail(weibo_id, user_id, time, table):
 
         weibo_id=weibo_forwarding['href'].split('/')[2].split('#')[0]
         if get_weibo_detail(weibo_id, user_id, time, table) is False:
-            return False
+            return True
         get_user_weibos(user_id, datetime.datetime.now().replace(year=2018), "")
     else:#如果是原创
         weibo_content = soup.find(class_='c', id='M_').find(class_='ctt')

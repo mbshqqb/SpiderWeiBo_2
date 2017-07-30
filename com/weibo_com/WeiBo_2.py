@@ -10,5 +10,5 @@ from com.zj.get_weibo_detail_file import get_weibo_detail
 
 def main():
     for weibo_id,user_id in get_weibo_ids():
-        get_weibo_detail(weibo_id, user_id,datetime.datetime.now()- datetime.timedelta(hours=60) , "weibo_info_2")
+        get_weibo_detail(weibo_id, user_id,datetime.datetime.now()- datetime.timedelta(hours=100) , "weibo_info_2")
 main()

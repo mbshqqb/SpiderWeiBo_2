@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import csv
 
+import datetime
+
 from com.zj.MDBUtils import *
 
 def save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number):
@@ -13,7 +15,7 @@ def save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_num
 def save_weibo(table,weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number):
     print(weibo_id,weibo_time)
     if insert(['weibo_id','user_id','weibo_content','weibo_time','forward_number','comment_number','thumbup_number'],
-              [weibo_id,user_id,weibo_content,weibo_time,forward_number,comment_number,thumbup_number],table)is False:
+              [weibo_id,user_id,weibo_content, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),forward_number,comment_number,thumbup_number],table)is False:
         return False
     return True
 

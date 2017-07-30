@@ -20,19 +20,22 @@ def get_user_weibos(user_id,time,table):
     except urllib.error.URLError:
         print(user_url)
         return True
-    print(response.info().get('Content-Encoding'))  # 获得编码，为gzip
     data = response.read()
     # gzip解压
     html = gzip.decompress(data).decode('utf-8')
     soup = BeautifulSoup(html, 'html.parser')
     # ------------------------用户信息----------------------------
     # user_info
+    print("user_start:",user_id)
     print(html)
     user_info_soup = soup.find(class_='u').find(class_='ctt')
     user_infos = [token for token in user_info_soup.stripped_strings]
-    nick_name = user_infos[0]
-    user_gender = user_infos[1].split('/')[0]
-    user_addr = user_infos[1].split('/')[1]
+    try:
+        nick_name = user_infos[0]
+        user_gender = user_infos[1].split('/')[0]
+        user_addr = user_infos[1].split('/')[1]
+    except IndexError:
+        return True
     # user_weibo_info
     weibo_number = soup.find(class_='u').find(class_='tip2').find(class_='tc').text
     follower_number =soup.find(class_='u').find(class_='tip2').find_all('a', recursive=False)[0].text
@@ -47,5 +50,6 @@ def get_user_weibos(user_id,time,table):
         print('page:',page)
         if get_page_weibo(page,user_id,time,table) is False:
             save_user(user_id, nick_name, user_gender, user_addr, weibo_number, follower_number, fans_number)
+            print("user_end",user_id)
             return True
     return True
