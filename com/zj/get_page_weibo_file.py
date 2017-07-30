@@ -1,6 +1,13 @@
 # -*- coding:utf-8 -*-
+import gzip
+import urllib
 
-from com.zj.get_weibo_detail_file import *
+from bs4 import BeautifulSoup
+
+from com.zj.get_weibo_detail_file import get_weibo_detail
+from com.zj.opener_cn_file import domain_name, opener
+
+
 def get_page_weibo(page,user_id,time,table):
     try:
         page_url = domain_name + user_id + '?page='+str(page)

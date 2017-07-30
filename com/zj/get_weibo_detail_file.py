@@ -1,14 +1,18 @@
 # -*- coding:utf-8 -*-
 # from com.zj.TESTDHelper import *
-from com.zj.MDBHelper import *
+import datetime
+
+from com.zj.MDBHelper import save_weibo, save_comment
 # from com.zj.MySQLDBHelper import *
 import gzip
 import re
 import urllib.parse
 from bs4 import BeautifulSoup
 from functools import reduce
-from com.zj.opener_cn_file import *
+from com.zj.opener_cn_file import opener
+from com.zj.opener_cn_file import domain_name
 from com.zj.get_weibo_time import get_weibo_time
+from com.zj.get_user_weibos_file import get_user_weibos
 def get_weibo_detail(weibo_id, user_id, time, table):
     try:
         weibo_url = domain_name + user_id + "/" + weibo_id
@@ -33,6 +37,10 @@ def get_weibo_detail(weibo_id, user_id, time, table):
     except TypeError:
         print("TypeError:"+soup.find(class_='c', id='M_'))
         return True
+    except AttributeError:
+        print(weibo_id)
+        print("AttributeError:" + soup.find(class_='c', id='M_'))
+        return True
     is_original=True
     if weibo_forwarding is not None:#如果是转发的话
         is_original=False
@@ -44,9 +52,11 @@ def get_weibo_detail(weibo_id, user_id, time, table):
             return True
         if user_id=='u':
             user_id=soup.find(class_='c', id='M_').find(class_='cmt').find('a')['href'].split('/')[2]
+
         weibo_id=weibo_forwarding['href'].split('/')[2].split('#')[0]
         if get_weibo_detail(weibo_id, user_id, time, table) is False:
             return False
+        get_user_weibos(user_id, datetime.datetime.now().replace(year=2018), "")
     else:#如果是原创
         weibo_content = soup.find(class_='c', id='M_').find(class_='ctt')
         atags=weibo_content.find_all('a')

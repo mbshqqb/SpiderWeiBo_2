@@ -2,6 +2,7 @@
 import csv
 
 from com.zj.MDBUtils import *
+
 def save_user(user_id, nick_name,user_gender,user_addr,weibo_number,follower_number,fans_number):
     print('user:',user_id)
     if insert(['user_id',' nick_name','user_gender','user_addr','weibo_number','follower_number','fans_number'],
@@ -26,9 +27,13 @@ def exist_user_id(user_id):
     else:
         return True
 
-# def get_user_id():
 #     return ['alibuybuy']
 def get_user_id():
-    with open('id_31.csv') as f:
+    with open('id_12.csv') as f:
         reader=csv.reader(f)
         return [row[0] for row in reader]
+
+def get_weibo_ids():
+    list=get_all("weibo_info","weibo_id","user_id")
+    for k_v in list:
+        yield k_v.get("weibo_id"),k_v.get("user_id")

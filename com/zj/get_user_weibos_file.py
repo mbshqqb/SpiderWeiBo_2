@@ -1,9 +1,17 @@
 # -*- coding:utf-8 -*-
 # from com.zj.TESTDHelper import *
-from com.zj.MDBHelper import *
+import gzip
+import urllib
+
+from bs4 import BeautifulSoup
+
+from com.zj.MDBHelper import exist_user_id, save_user
 # from com.zj.MySQLDBHelper import *
-from com.zj.get_page_weibo_file import *
+from com.zj.opener_cn_file import domain_name, opener
+
+
 def get_user_weibos(user_id,time,table):
+    from com.zj.get_page_weibo_file import get_page_weibo
     if exist_user_id(user_id):
         return True
     try:

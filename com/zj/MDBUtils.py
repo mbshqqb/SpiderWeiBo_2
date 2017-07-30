@@ -11,7 +11,7 @@ def getDB():
     client = pymongo.MongoClient('172.17.11.169', 27017)
     db = client.admin
     db.authenticate("root", "root")
-    db =client['weibo']
+    db =client['zj']
     return db,client
 
 
@@ -25,7 +25,19 @@ def get(tablename, col, value):
         list.append(dist)
         dist = {}
     return list
-
+def get_all(tablename, *cols):
+    projection={"_id": 0}
+    for col in cols:
+        projection[col]=1
+    cursor = db.get_collection(tablename).find({},projection)
+    list = []
+    dist = {}
+    for item in cursor:
+        for key, value in item.items():
+            dist[key] = value
+        list.append(dist)
+        dist = {}
+    return list
 
 def insert(collist: object, data: object, table: object) -> object:
     # 设置唯一索引，去重操作
