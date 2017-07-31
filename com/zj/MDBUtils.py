@@ -75,4 +75,3 @@ db.get_collection("weibo_info").ensure_index("weibo_id", unique=True, dropDups=T
 db.get_collection("weibo_info_2").ensure_index("weibo_id", unique=True, dropDups=True)
 
 
-

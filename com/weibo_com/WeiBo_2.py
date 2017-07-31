@@ -5,10 +5,11 @@ from com.zj.MDBHelper import get_weibo_ids
 # from com.zj.MySQLDBHelper import *
 import datetime
 
-from com.zj.get_weibo_detail_file import get_weibo_detail
+from com.zj.get_weibo_info_file import get_weibo_info
 
 
 def main():
-    for weibo_id,user_id in get_weibo_ids():
-        get_weibo_detail(weibo_id, user_id,datetime.datetime.now()- datetime.timedelta(hours=100) , "weibo_info_2")
+    for weibo_id in get_weibo_ids():
+        print(weibo_id)
+        get_weibo_info(weibo_id,"weibo_info_2")
 main()
