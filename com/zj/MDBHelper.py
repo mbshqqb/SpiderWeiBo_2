@@ -39,6 +39,14 @@ def exist_user_id(user_id):
     else:
         return True
 
+def exist_weibo2_id(weibo_id):
+    rows = get('weibo_info_2', 'weibo_id', weibo_id)
+    if len(rows) == 0:
+        return False
+    else:
+        return True
+
+
 #     return ['alibuybuy']
 def get_user_id():
     with open('id_11.csv') as f:
